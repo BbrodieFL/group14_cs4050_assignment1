@@ -135,19 +135,19 @@ public class SortShow extends JPanel {
 	public void ShellSort(){
 		//getting the date and time when the recursive merge sort starts
 		Calendar start = Calendar.getInstance();
-		//assigning the size for the tempArray below
-
-		Calendar start = Calendar.getInstance();
-
+		
+			//assigning the size for the tempArray below
 			int n = lines_lengths.length;
 
 			//gap calculation
 			for (int gap = n / 2; gap > 0; gap /= 2) {
-				paintComponent(this.getGraphics());
 				for (int i = gap; i < n; i++) {
+					//rendering the sorting over time with the GUI
+					paintComponent(this.getGraphics());
+
+					
 					int temp = lines_lengths[i];
-
-
+					
 					int j;
 					for (j = i; j >= gap && lines_lengths[j - gap] > temp; j -= gap) {
 						lines_lengths[j] = lines_lengths[j - gap];
@@ -164,6 +164,7 @@ public class SortShow extends JPanel {
 	///////////////////////////////////////////////////////////////////////////////////
 		
 		//recursive merge sort method
+		//Implemented by Olothando Masiza
 		public void R_MergeSort(){
 			//getting the date and time when the recursive merge sort starts
 			Calendar start = Calendar.getInstance();
@@ -180,9 +181,8 @@ public class SortShow extends JPanel {
 		
 		//recursive merge sort method
 		public void R_MergeSort(int first, int last){
-			printComponent(this.getGraphics());
 			delay(10);
-
+			//base case to stop the recusion
 			if(first < last){
 
 				//Finding the mid without causing integer overflow
@@ -193,6 +193,7 @@ public class SortShow extends JPanel {
 				R_MergeSort(mid+1,last);
 				//merging of the two sub arrays
 				R_Merge(first,mid,last);
+				printComponent(this.getGraphics());
 
 		}
 
@@ -221,12 +222,14 @@ public class SortShow extends JPanel {
 			}
 
 			//Indicies to merge the different sub-arrays
+			//Set to zero to begin of each sub array respectively
 			int i = 0, j = 0;
 
 			
 			//Index for the array that values will be merged into
 			int k = first;
 
+			//populating the left and right sub arrays 
 			while (i < n1 && j < n2) {
 
 				if (left[i] < right[j]) {
@@ -238,13 +241,13 @@ public class SortShow extends JPanel {
 				}
 				k++;
 			}
-
+			//If needed put the remainder of the elements of the subarray left array into the merge array
 			while (i < n1) {
 				lines_lengths[k] = left[i];
 				i++;
 				k++;
 			}
-
+			//If needed put the remainder of the elements of the subarray right array into the merge array
 			while (j < n2) {
 				lines_lengths[k] = right[j];
 				j++;
