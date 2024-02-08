@@ -137,7 +137,24 @@ public class SortShow extends JPanel {
 		Calendar start = Calendar.getInstance();
 		//assigning the size for the tempArray below
 
-		//You need to complete this part.
+		Calendar start = Calendar.getInstance();
+
+			int n = lines_lengths.length;
+
+			//gap calculation
+			for (int gap = n / 2; gap > 0; gap /= 2) {
+				paintComponent(this.getGraphics());
+				for (int i = gap; i < n; i++) {
+					int temp = lines_lengths[i];
+
+
+					int j;
+					for (j = i; j >= gap && lines_lengths[j - gap] > temp; j -= gap) {
+						lines_lengths[j] = lines_lengths[j - gap];
+					}
+					lines_lengths[j] = temp;
+				}
+			}
 
 		Calendar end = Calendar.getInstance();
 		//getting the time it took for the iterative merge sort to execute
@@ -152,7 +169,7 @@ public class SortShow extends JPanel {
 			Calendar start = Calendar.getInstance();
 			//assigning the size for the tempArray below
 
-			//You need to complete this part.
+			R_MergeSort(0, total_number_of_lines-1);
 
 			Calendar end = Calendar.getInstance();
 			//getting the time it took for the iterative merge sort to execute
@@ -163,21 +180,76 @@ public class SortShow extends JPanel {
 		
 		//recursive merge sort method
 		public void R_MergeSort(int first, int last){
+			printComponent(this.getGraphics());
+			delay(10);
+
 			if(first < last){
 
-				//You need to complete this part.
+				//Finding the mid without causing integer overflow
+				int mid = first + (last - first)/2;
 
-				//Causing a delay for 10ms
-				delay(10); 
-			}
+				//Recursive merge sort
+				R_MergeSort(first,mid);
+				R_MergeSort(mid+1,last);
+				//merging of the two sub arrays
+				R_Merge(first,mid,last);
+
 		}
 
 		
 		//recursive merge sort method
 		public void R_Merge(int first, int mid, int last){
 
-			//You need to complete this part.
+			
+			//size of the temp arrays used for merging
+			int n1 = mid - first + 1;
+			int n2 = last - mid;
+
+			//temp arrays created
+			int left[] = new int[n1];
+			int right[] = new int[n2];
+
+			//Copying data into sub array left
+			for (int i = 0; i < n1; i++) {
 				
+				left[i] = lines_lengths[first + i];
+			}
+			//Copying data into sub arry right
+			for (int j = 0; j < n2; j++) {
+				//I am using + 1 because the left includes the middle and I want to start after the middle
+				right[j] = lines_lengths[mid + j + 1];
+			}
+
+			//Indicies to merge the different sub-arrays
+			int i = 0, j = 0;
+
+			
+			//Index for the array that values will be merged into
+			int k = first;
+
+			while (i < n1 && j < n2) {
+
+				if (left[i] < right[j]) {
+					lines_lengths[k] = left[i];
+					i++;
+				} else {
+					lines_lengths[k] = right[j];
+					j++;
+				}
+				k++;
+			}
+
+			while (i < n1) {
+				lines_lengths[k] = left[i];
+				i++;
+				k++;
+			}
+
+			while (j < n2) {
+				lines_lengths[k] = right[j];
+				j++;
+				k++;
+			}
 		}
 		
 		//
